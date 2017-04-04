@@ -17,31 +17,31 @@ library(utils)
 start_time <- proc.time()
 local_file <- data.frame()
 
-search_term <- "dell 8gb 500"
+search_term <- "dell 8gb 500 silver"
 search_term_coded <- URLencode(search_term)
 
 url1 <- "https://www.amazon.com"
 url2 <- "/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="
 amazon_pd <- paste0(url1, url2, search_term_coded)
 page <- 1
-deco0 <-"............................................................................."
+deco0 <-"............................................................................"
 deco <- "***********************"
 
 while(!is.null(amazon_pd))
 {
   while(amazon_pd != "https://www.amazon.com")
   {
-    writeLines(paste0(deco,(" Web Scrapping: Page "),page,(" for "),search_term,deco))
-    writeLines(paste0("Iteration ",page," initiated! "))
+    writeLines(paste0(("\n"),deco,(" Web Scrapping: Page "),page,(" for "),search_term,deco,("\n")))
+    writeLines(paste0("Iteration ",page," initiated ! \n"))
     amazon_html<- read_html(amazon_pd)
     #write_html(amazon_html, file = "/Users/temp/Desktop/R practise/amazhtml.txt")
-    writeLines("Fetching attributes....")
+    writeLines("\nFetching attributes....\n.\n.\n.")
     attributes<- html_attrs(html_nodes(amazon_html,"#resultsCol .s-access-detail-page"))
-    writeLines("Attributes fetched")
+    writeLines("Attributes fetched\n\n")
     
-    writeLines(paste0(("Iteration "),page,(" begins:"),deco0))
+    writeLines(paste0(("Iteration "),page,(" begins:"),deco0,("\n")))
     prod_titles <- sapply(attributes,'[[','title')
-    writeLines(paste0("Total products fetched: ", length(prod_titles)))
+    writeLines(paste0(length(prod_titles)," products fetched"))
     prod_links <- sapply(attributes,'[[','href')
     
     #building valid links for missing domains. Some of the offer listed products have
@@ -88,7 +88,7 @@ while(!is.null(amazon_pd))
     drop(part2)
     drop(trial0)
     prod_cost = unlist(prod_cost)
-    writeLines(paste0(length(prod_cost), " cost values fetched"))
+    writeLines(paste0(length(prod_cost), " values for cost fetched"))
     
     
     part1 <- "span[name*='"
@@ -118,10 +118,10 @@ while(!is.null(amazon_pd))
     
     prod_data = data.frame(prod_titles,prod_cost,prod_rating,prod_codes,new_links,all_reviews_links)
     
-    writeLines("Binding the collected data.....")
+    writeLines("\nBinding the collected data...\n.\n.")
     local_file <- rbind(local_file,prod_data)
-    writeLines("Data sccessfully binded in local_file")
-    writeLines(paste0("Iteration ",page," ends"))
+    writeLines("Data sccessfully binded in local_file\n")
+    writeLines(paste0("Iteration ",page," ends",deco0,"\n\n"))
     #for next iteration
     next_pg <- html_attrs(html_nodes(amazon_html,".pagnRA a"))
     next_pg_link <- paste0(url1,sapply(next_pg,'[[','href'))
@@ -129,13 +129,14 @@ while(!is.null(amazon_pd))
     amazon_pd <-next_pg_link
     page = page +1
   }
-  write.csv(local_file, file ="amazonsearch.csv")
+  write.csv(local_file, file ="amazonsearch1.csv")
+  writeLines("\nFiles written succesfully !")
   amazon_pd <- NULL
-  writeLines(paste0("Process completed !!"))
+  writeLines(paste0("\nProcess completed !!\n"))
   writeLines(paste0("Total products lined: ", length(local_file$prod_titles)))
   writeLines(paste0("Total pages traversed: ", page))
-  writeLines(paste0("Results for ",search_term," saved at ",getwd(),"/amazonsearch.csv"))
-  writeLines(paste0("Process time: "))
+  writeLines(paste0("\nResults for ",search_term," saved at ",getwd(),"/amazonsearch.csv"))
+  writeLines(paste0("\nProcess time: "))
   et <- proc.time()-start_time
   print(et)
 }
