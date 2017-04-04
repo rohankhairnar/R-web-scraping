@@ -5,7 +5,7 @@ library(utils)
 start_time <- proc.time()
 local_file <- data.frame()
 
-search_term <- "dell 8gb 500 silver"
+search_term <- "dell 8gb 500"
 search_term_coded <- URLencode(search_term)
 
 url1 <- "https://www.amazon.com"
@@ -20,7 +20,7 @@ while(!is.null(amazon_pd))
   while(amazon_pd != "https://www.amazon.com")
   {
     writeLines(paste0(deco,(" Web Scrapping: Page "),page,(" for "),search_term,deco))
-    writeLines(paste0("Iteration ",page," initiated at ",timestamp()))
+    writeLines(paste0("Iteration ",page," initiated! "))
     amazon_html<- read_html(amazon_pd)
     #write_html(amazon_html, file = "/Users/temp/Desktop/R practise/amazhtml.txt")
     writeLines("Fetching attributes....")
@@ -122,7 +122,7 @@ while(!is.null(amazon_pd))
   writeLines(paste0("Process completed !!"))
   writeLines(paste0("Total products lined: ", length(local_file$prod_titles)))
   writeLines(paste0("Total pages traversed: ", page))
-  writeLines(paste0("Results for ",search_term," saved at ",getwd(),"/amazonsearch1.csv"))
+  writeLines(paste0("Results for ",search_term," saved at ",getwd(),"/amazonsearch.csv"))
   writeLines(paste0("Process time: "))
   et <- proc.time()-start_time
   print(et)
