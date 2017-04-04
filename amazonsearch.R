@@ -1,3 +1,15 @@
+#by rohan khairnar
+#Extracts details of products based on 'search_term'.
+#The 'search_term' is hard-coded and has to be entered in the R file before running.
+#Script runs in while loop for each 'next' occurence of a page, thus multiple iterations.
+#Final file contains data with product titles, selling price, ratings, review links, product links and product codes.
+
+#to do
+#mine for positive and negative reviews
+#code optimization, check
+#quality checks, NA replacements/alternate css selectors
+
+
 library(xml2)
 library(rvest)
 library(utils)
@@ -32,7 +44,7 @@ while(!is.null(amazon_pd))
     writeLines(paste0("Total products fetched: ", length(prod_titles)))
     prod_links <- sapply(attributes,'[[','href')
     
-    #building valid links for links missing domain. Some of the offer listed products have
+    #building valid links for missing domains. Some of the offer listed products have
     #encoded urls, which need to be decoded and replaced
     for(i in 1:length(prod_links))
     {
