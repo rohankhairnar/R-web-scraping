@@ -34,7 +34,7 @@ while(!is.null(amazon_pd))
     writeLines(paste0(("\n"),deco,(" Web Scrapping: Page "),page,(" for "),search_term,deco,("\n")))
     writeLines(paste0("Iteration ",page," initiated ! \n"))
     amazon_html<- read_html(amazon_pd)
-    #write_html(amazon_html, file = "/Users/temp/Desktop/R practise/amazhtml.txt")
+    
     writeLines("\nFetching attributes....\n.\n.\n.")
     attributes<- html_attrs(html_nodes(amazon_html,"#resultsCol .s-access-detail-page"))
     writeLines("Attributes fetched\n\n")
@@ -113,18 +113,21 @@ while(!is.null(amazon_pd))
     drop(trial0)
     writeLines(paste0(length(prod_rating)," product ratings fecthed"))
     
-    #for number of reviewers
+    #for number of reviewers, to be added
     #html_text(html_nodes(amazon_html,".a-row a-spacing-top-mini span[name='B00YVVE7YO'] .a-size-small"))
     
+    #generate a data frame of new data and bind with local_file for all iterations
     prod_data = data.frame(prod_titles,prod_cost,prod_rating,prod_codes,new_links,all_reviews_links)
     
     writeLines("\nBinding the collected data...\n.\n.")
     local_file <- rbind(local_file,prod_data)
     writeLines("Data sccessfully binded in local_file\n")
     writeLines(paste0("Iteration ",page," ends",deco0,"\n\n"))
+    
     #for next iteration
     next_pg <- html_attrs(html_nodes(amazon_html,".pagnRA a"))
     next_pg_link <- paste0(url1,sapply(next_pg,'[[','href'))
+    
     #used in next iteration
     amazon_pd <-next_pg_link
     page = page +1
