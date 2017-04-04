@@ -30,8 +30,6 @@ all_nodes<-html_nodes(imdb_250, ".titleColumn a")
 key_cast<- sapply(html_attrs(all_nodes),'[[','title')
 movie_link <- paste0(base_url,sapply(html_attrs(all_nodes),'[[','href'))
 
-#html_attrs((all_nodes),'[[','href')
-
 rank <- c(1:length(movie_link))
 
 x<- html_nodes(imdb_250, ".ratingColumn strong")

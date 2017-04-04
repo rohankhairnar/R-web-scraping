@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "library(rvest)\nlibrary(utils)\nlibrary(xml2)\n\nbase_url<- \"http://www.imdb.com\"\nurl250 <- \"http://www.imdb.com/chart/top?ref_=nv_mv_250_6\"\n\nimdb_250 <- read_html(url250)\n\nimdb_250 %>%\n  html_nodes(\".secondaryInfo , strong , #main a\") %>%\n  html_text()\n\nmovie_list <- imdb_250 %>%\n  html_nodes(\".titleColumn a\") %>%\n  html_text()\n\nmovie_year<- gsub(\")\",\"\", gsub(\"\\\\(\",\"\", \n                               imdb_250 %>%\n                                 html_nodes(\".secondaryInfo\") %>%\n                                 html_text()))\n\nmovie_rating<-imdb_250 %>%\n  html_nodes(\"strong\") %>%\n  html_text()\n\nall_nodes<-html_nodes(imdb_250, \".titleColumn a\")\n\n\nkey_cast<- sapply(html_attrs(all_nodes),'[[','title')\nmovie_link <- paste0(base_url,sapply(html_attrs(all_nodes),'[[','href'))\n\n#html_attrs((all_nodes),'[[','href')\n\nrank <- c(1:length(movie_link))\n\nx<- html_nodes(imdb_250, \".ratingColumn strong\")\nvoters_count<- gsub(\".*?based on \",\"\",gsub(\" user ratings.*\",\"\",x))\n\ndb_250 = data.frame(rank, movie_list, key_cast, movie_year, movie_rating, voters_count, movie_link)\nwrite.csv(db_250, file = \"/Users/temp/Desktop/R practise/imdb250.csv\")\n\n",
+    "contents" : "library(rvest)\nlibrary(utils)\nlibrary(xml2)\n\nbase_url<- \"http://www.imdb.com\"\nurl250 <- \"http://www.imdb.com/chart/top?ref_=nv_mv_250_6\"\n\nimdb_250 <- read_html(url250)\n\nimdb_250 %>%\n  html_nodes(\".secondaryInfo , strong , #main a\") %>%\n  html_text()\n\nmovie_list <- imdb_250 %>%\n  html_nodes(\".titleColumn a\") %>%\n  html_text()\n\nmovie_year<- gsub(\")\",\"\", gsub(\"\\\\(\",\"\", \n                               imdb_250 %>%\n                                 html_nodes(\".secondaryInfo\") %>%\n                                 html_text()))\n\nmovie_rating<-imdb_250 %>%\n  html_nodes(\"strong\") %>%\n  html_text()\n\nall_nodes<-html_nodes(imdb_250, \".titleColumn a\")\n\n\nkey_cast<- sapply(html_attrs(all_nodes),'[[','title')\nmovie_link <- paste0(base_url,sapply(html_attrs(all_nodes),'[[','href'))\n\nrank <- c(1:length(movie_link))\n\nx<- html_nodes(imdb_250, \".ratingColumn strong\")\nvoters_count<- gsub(\".*?based on \",\"\",gsub(\" user ratings.*\",\"\",x))\n\ndb_250 = data.frame(rank, movie_list, key_cast, movie_year, movie_rating, voters_count, movie_link)\nwrite.csv(db_250, file = \"/Users/temp/Desktop/R practise/imdb250.csv\")\n\n",
     "created" : 1491329856036.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3779288409",
+    "hash" : "2716240183",
     "id" : "44526D43",
-    "lastKnownWriteTime" : 1491339537,
-    "last_content_update" : 1491339537270,
+    "lastKnownWriteTime" : 1491339587,
+    "last_content_update" : 1491339587689,
     "path" : "~/R Projects/Web Scraping with R/imdb250.R",
     "project_path" : "imdb250.R",
     "properties" : {
