@@ -31,7 +31,6 @@ while(!is.null(amazon_pd))
     prod_titles <- sapply(attributes,'[[','title')
     writeLines(paste0("Total products fetched: ", length(prod_titles)))
     prod_links <- sapply(attributes,'[[','href')
-    #length(prod_links)
     
     #building valid links for links missing domain. Some of the offer listed products have
     #encoded urls, which need to be decoded and replaced
@@ -45,12 +44,7 @@ while(!is.null(amazon_pd))
     
     new_links <- prod_links
     writeLines(paste0(length(new_links)," links generated"))
-    #attributes_links <- html_attrs(html_nodes(amazon_html, "#resultsCol .a-spacing-top-mini .a-link-normal"))
-    #links <- sapply(attributes_links,'[[','href')
-    #tryd <- links[!]
-    
-    #length(links)
-    #new_links<-gsub('ref.*','',links)
+
     all_reviews_links <- gsub('/dp/','/product-reviews/',new_links)
     writeLines(paste0(length(all_reviews_links), " links for reviews generated"))
     
@@ -61,8 +55,6 @@ while(!is.null(amazon_pd))
     #parting the CSS Selectors in order to make it dynamic as per the product codes
     part1 <- 'a.a-link-normal[href*='
     part2 <- '] .sx-zero-spacing'
-    #trial0 <- 1
-    #prod_cost <- 1
     attributes_cost <- NULL
     trial0 <- paste0(part1,prod_codes,part2)
     prod_cost <- NULL
