@@ -132,7 +132,7 @@ while(!is.null(amazon_pd))
     amazon_pd <-next_pg_link
     page = page +1
   }
-  write.csv(local_file, file ="amazonsearch.csv")
+  write(local_file, file ="amazonsearch.csv")
   writeLines("\nFiles written successfully !")
   amazon_pd <- NULL
   writeLines(paste0("\nProcess completed !!\n"))
