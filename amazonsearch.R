@@ -17,7 +17,7 @@ library(utils)
 start_time <- proc.time()
 local_file <- data.frame()
 
-search_term <- "logitech"
+search_term <- "dell laptop 8GB 500"
 search_term_coded <- URLencode(search_term)
 
 url1 <- "https://www.amazon.com"
@@ -132,13 +132,14 @@ while(!is.null(amazon_pd))
     amazon_pd <-next_pg_link
     page = page +1
   }
-  write(local_file, file ="amazonsearch.csv")
+  file_name <- paste0(search_term,".csv")
+  write.csv(local_file, file = file_name)
   writeLines("\nFiles written successfully !")
   amazon_pd <- NULL
   writeLines(paste0("\nProcess completed !!\n"))
   writeLines(paste0("Total products lined: ", length(local_file$prod_titles)))
   writeLines(paste0("Total pages traversed: ", page))
-  writeLines(paste0("\nResults for ",search_term," saved at ",getwd(),"/amazonsearch.csv"))
+  writeLines(paste0("\nResults for ",search_term," saved at ",getwd(),"/",file_name))
   writeLines(paste0("\nProcess time: "))
   et <- proc.time()-start_time
   print(et)
